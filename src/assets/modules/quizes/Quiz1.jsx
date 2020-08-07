@@ -15,14 +15,15 @@
 import React, { Fragment } from 'react';
 import { Link, BrowserRouter, Switch, Route } from 'react-router-dom';
 import birdsData from '../birdsData';
+import groupsNames from '../groupsNames';
 
 class Quiz1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       prevAudio: null,
-      isAnswered: false,
-      mistakes: 0,
+      isAnswered: this.props.isAnswered,
+      mistakes: this.props.mistakes,
     };
 
     this.playAudio = this.playAudio.bind(this);
@@ -52,7 +53,7 @@ class Quiz1 extends React.Component {
         this.setState({
           isAnswered: true,
         });
-        this.props.incrementScore(6 - this.state.mistakes);
+        this.props.incrementScore(5 - this.state.mistakes);
         this.props.nextStepSetter();
       } else {
         console.log('NOPE');
@@ -70,7 +71,7 @@ class Quiz1 extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <p>Разминка</p>
+          <p>{groupsNames[group]}</p>
           {/* {birdsData[group].map(bird => {
             return (
               <Fragment key={bird.name}>
@@ -86,7 +87,7 @@ class Quiz1 extends React.Component {
           })} */}
 
           <div className="col-12">
-            <p>{birdsData[group][this.props.question].name}</p>
+            <p>{!this.state.isAnswered ? '******' : birdsData[group][this.props.question].name}</p>
             <audio
               onPlay={this.playAudio}
               className={`group${group}`}
@@ -96,7 +97,7 @@ class Quiz1 extends React.Component {
           </div>
 
           <BrowserRouter>
-            <nav>
+            <nav className='col-6'>
               <ul>
                 {birdsData[group].map(bird => {
                   return (
@@ -115,30 +116,45 @@ class Quiz1 extends React.Component {
                 return (
                   <Route key={`/${bird.name}`} path={`/${bird.name}`}>
                     <Fragment key={bird.name}>
-                      <p>{bird.name}</p>
-                      <audio
-                        onPlay={this.playAudio}
-                        className={`group${group}`}
-                        controls
-                        src={bird.audio}
-                      />
+                      <div className='col-6'>
+                        <p>{bird.name}</p>
+                        <audio
+                          onPlay={this.playAudio}
+                          className={`group${group}`}
+                          controls
+                          src={bird.audio}
+                        />
+                        <p>{bird.species}</p>
+                        <p>{bird.description}</p>
+                      </div>
                     </Fragment>
                   </Route>
                 );
               })}
               <Route>
-                <div className='col-6' >
-                  <p>Внимательно прослушайте предложенное выше аудио и попробуйте угадать, что за птица поет.</p>
+                <div className="col-6">
+                  <p>
+                    Внимательно прослушайте предложенное выше аудио и попробуйте угадать, что за
+                    птица поет.
+                  </p>
                 </div>
               </Route>
             </Switch>
           </BrowserRouter>
-          <Link className='col-12' step="1" onClick={this.props.goToNext} to="/Воробьиные">
-            Следующий вопрос
-          </Link>
+          {group + 1 < groupsNames.length ? (
+            <Link
+              className="col-12"
+              step={group + 1}
+              onClick={this.props.goToNext}
+              to={`/${groupsNames[group + 1]}`}
+            >
+              Следующий вопрос
+            </Link>
+          ) : null}
         </div>
       </div>
     );
   }
 }
+
 export default Quiz1;

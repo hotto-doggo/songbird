@@ -101,8 +101,101 @@ class App extends React.Component {
             </div>
           </div>
           <Switch>
-          
-            <Route path="/Разминка">
+            <Route path={`/${groupsNames[0]}`}>
+              <Quiz1
+                question={this.state.randoms[0]}
+                group='0'
+                isAnswered={false}
+                mistakes={0}
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
+
+            <Route path={`/${groupsNames[1]}`}>
+              <Quiz2
+                question={this.state.randoms[1]}
+                group='1'
+                isAnswered={false}
+                mistakes={0}
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
+
+            <Route path={`/${groupsNames[2]}`}>
+              <Quiz3
+                question={this.state.randoms[2]}
+                group='2'
+                isAnswered={false}
+                mistakes={0}
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
+
+            <Route path={`/${groupsNames[3]}`}>
+              <Quiz4
+                question={this.state.randoms[3]}
+                group='3'
+                isAnswered={false}
+                mistakes={0}
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
+
+            <Route path={`/${groupsNames[4]}`}>
+              <Quiz5
+                question={this.state.randoms[4]}
+                group='4'
+                isAnswered={false}
+                mistakes={0}
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
+
+            <Route path={`/${groupsNames[5]}`}>
+              <Quiz6
+                question={this.state.randoms[5]}
+                group='5'
+                isAnswered={false}
+                mistakes={0}
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
+
+            {/* последний рабочий через цикл
+           {groupsNames.map((group, index) => {
+            return(
+              <Route path={`/${group}`}>
+              <Quiz1
+                question={this.state.randoms[index]}
+                group={index}
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
+            )
+          })} */}
+
+            {/* <Route path="/Разминка">
               <Quiz1
                 question={this.state.randoms[0]}
                 group="0"
@@ -127,12 +220,14 @@ class App extends React.Component {
             </Route>
             <Route path="/Морские птицы">
               <Quiz6 group="5" properties={this.state} goToNext={this.goToNextQuiz} />
-            </Route>
+            </Route> */}
 
             <Route>
               <Quiz1
                 question={this.state.randoms[0]}
                 group="0"
+                isAnswered={false}
+                mistakes={0}
                 properties={this.state}
                 goToNext={this.goToNextQuiz}
                 nextStepSetter={this.nextStepSetter}
