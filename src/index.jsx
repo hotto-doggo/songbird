@@ -33,11 +33,19 @@ class App extends React.Component {
     this.state = {
       score: 0,
       step: 0,
+      randoms: [
+        randomInteger(0, groupsNames.length),
+        randomInteger(0, groupsNames.length),
+        randomInteger(0, groupsNames.length),
+        randomInteger(0, groupsNames.length),
+        randomInteger(0, groupsNames.length),
+        randomInteger(0, groupsNames.length),
+      ],
       // answered: [false, false, false, false, false, false],
     };
     this.nextStepSetter = this.nextStepSetter.bind(this);
     this.goToNextQuiz = this.goToNextQuiz.bind(this);
-    this.incrementScore = this.incrementScore.bind(this)
+    this.incrementScore = this.incrementScore.bind(this);
   }
 
   nextStepSetter() {
@@ -51,10 +59,10 @@ class App extends React.Component {
     });
   }
 
-  incrementScore(num){
+  incrementScore(num) {
     this.setState({
-      score: this.state.score + num
-    })
+      score: this.state.score + num,
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -93,9 +101,10 @@ class App extends React.Component {
             </div>
           </div>
           <Switch>
+          
             <Route path="/Разминка">
               <Quiz1
-                question={randomInteger(0, groupsNames.length)}
+                question={this.state.randoms[0]}
                 group="0"
                 properties={this.state}
                 goToNext={this.goToNextQuiz}
@@ -122,7 +131,7 @@ class App extends React.Component {
 
             <Route>
               <Quiz1
-                question={randomInteger(0, groupsNames.length)}
+                question={this.state.randoms[0]}
                 group="0"
                 properties={this.state}
                 goToNext={this.goToNextQuiz}

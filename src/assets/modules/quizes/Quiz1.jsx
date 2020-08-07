@@ -52,8 +52,8 @@ class Quiz1 extends React.Component {
         this.setState({
           isAnswered: true,
         });
-        this.props.incrementScore(6 - this.state.mistakes)
-        this.props.nextStepSetter()
+        this.props.incrementScore(6 - this.state.mistakes);
+        this.props.nextStepSetter();
       } else {
         console.log('NOPE');
         this.setState({
@@ -126,9 +126,14 @@ class Quiz1 extends React.Component {
                   </Route>
                 );
               })}
+              <Route>
+                <div className='col-6' >
+                  <p>Внимательно прослушайте предложенное выше аудио и попробуйте угадать, что за птица поет.</p>
+                </div>
+              </Route>
             </Switch>
           </BrowserRouter>
-          <Link step="1" onClick={this.props.goToNext} to="/Воробьиные">
+          <Link className='col-12' step="1" onClick={this.props.goToNext} to="/Воробьиные">
             Следующий вопрос
           </Link>
         </div>
