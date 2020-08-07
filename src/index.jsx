@@ -24,6 +24,7 @@ import Quiz5 from './assets/modules/quizes/Quiz5';
 import Quiz6 from './assets/modules/quizes/Quiz6';
 import birdsData from './assets/modules/birdsData';
 import groupsNames from './assets/modules/groupsNames';
+import randomInteger from './assets/modules/quizes/randomInteger';
 
 class App extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class App extends React.Component {
     };
     this.nextStepSetter = this.nextStepSetter.bind(this);
     this.goToNextQuiz = this.goToNextQuiz.bind(this);
+    this.incrementScore = this.incrementScore.bind(this)
   }
 
   nextStepSetter() {
@@ -47,6 +49,12 @@ class App extends React.Component {
       step: this.state.step + 1,
       // answered: newHistory,
     });
+  }
+
+  incrementScore(num){
+    this.setState({
+      score: this.state.score + num
+    })
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -85,33 +93,43 @@ class App extends React.Component {
             </div>
           </div>
           <Switch>
-            <Route path="/Разминка" component={Quiz1} />
-            <Route path="/Воробьиные" component={Quiz2} />
-            <Route path="/Лесные птицы" component={Quiz3} />
-            <Route path="/Певчие птицы" component={Quiz4} />
-            <Route path="/Хищные птицы" component={Quiz5} />
-            <Route path="/Морские птицы" component={Quiz6} />
+            <Route path="/Разминка">
+              <Quiz1
+                question={randomInteger(0, groupsNames.length)}
+                group="0"
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
 
-            {/* 
-            Maksim Pavlov(@Maxvvellh0use)Сегодня, в 19:19
-@Maksim Pavlov(@Maxvvellh0use) 
-вот так:
-<Route path="/Разминка" component={Quiz1} />
-и в компонент Quiz1 мне надо передать пропс
-@vickymarshmallow(@wviktor93) <Route path="/main/games/audio_call">
-                            <AudioCall
-                                history={this.props.history}
-                            />
-                        </Route>
-вот так его перепиши
-<Route path="/Разминка">
-                            <Quiz1 
-                                history={this.props.history}
-                            />
-                        </Route>
-             */}
+            <Route path="/Воробьиные">
+              <Quiz2 group="1" properties={this.state} goToNext={this.goToNextQuiz} />
+            </Route>
+            <Route path="/Лесные птицы">
+              <Quiz3 group="2" properties={this.state} goToNext={this.goToNextQuiz} />
+            </Route>
+            <Route path="/Певчие птицы">
+              <Quiz4 group="3" properties={this.state} goToNext={this.goToNextQuiz} />
+            </Route>
+            <Route path="/Хищные птицы">
+              <Quiz5 group="4" properties={this.state} goToNext={this.goToNextQuiz} />
+            </Route>
+            <Route path="/Морские птицы">
+              <Quiz6 group="5" properties={this.state} goToNext={this.goToNextQuiz} />
+            </Route>
 
-            <Route component={Quiz1} />
+            <Route>
+              <Quiz1
+                question={randomInteger(0, groupsNames.length)}
+                group="0"
+                properties={this.state}
+                goToNext={this.goToNextQuiz}
+                nextStepSetter={this.nextStepSetter}
+                incrementScore={this.incrementScore}
+              />
+            </Route>
           </Switch>
         </BrowserRouter>
       </>
