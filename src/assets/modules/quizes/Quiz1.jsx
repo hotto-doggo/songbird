@@ -47,8 +47,16 @@ class Quiz1 extends React.Component {
   checkAnswer(e) {
     const group = Number(this.props.group);
     const currAnswer = e.target.getAttribute('bird');
+
+    // const success = document.querySelector('#success')
+    // const error = document.querySelector('#error')
+    // console.log(success, error)
+
     if (!this.state.isAnswered) {
       if (birdsData[group][this.props.question].name === currAnswer) {
+        // true answer handling
+        // success.play()
+        e.target.parentNode.classList.add('right')
         console.log('YYAAAAAAAAAASSSSSSSSSSSSS!!!! I GOT TWO FREE TACOS!!!!!!!!!');
         this.setState({
           isAnswered: true,
@@ -56,6 +64,9 @@ class Quiz1 extends React.Component {
         this.props.incrementScore(5 - this.state.mistakes);
         this.props.nextStepSetter();
       } else {
+        // false answer handling
+        // failure.play()
+        e.target.parentNode.classList.add('wrong')
         console.log('NOPE');
         this.setState({
           mistakes: this.state.mistakes + 1,
@@ -97,11 +108,11 @@ class Quiz1 extends React.Component {
           </div>
 
           <BrowserRouter>
-            <nav className='col-6'>
+            <nav className="col-6">
               <ul>
                 {birdsData[group].map(bird => {
                   return (
-                    <li key={bird.name}>
+                    <li className='nav-link' key={bird.name}>
                       <Link bird={bird.name} onClick={this.checkAnswer} to={`/${bird.name}`}>
                         {bird.name}
                       </Link>
@@ -116,7 +127,7 @@ class Quiz1 extends React.Component {
                 return (
                   <Route key={`/${bird.name}`} path={`/${bird.name}`}>
                     <Fragment key={bird.name}>
-                      <div className='col-6'>
+                      <div className="col-6">
                         <p>{bird.name}</p>
                         <audio
                           onPlay={this.playAudio}
