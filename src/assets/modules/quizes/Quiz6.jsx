@@ -13,9 +13,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Fragment } from 'react';
-import { Link, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Link, MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import birdsData from '../birdsData';
 import groupsNames from '../groupsNames';
+import groupsNamesEng from '../groupsNamesEng';
 
 class Quiz6 extends React.Component {
   constructor(props) {
@@ -52,17 +53,18 @@ class Quiz6 extends React.Component {
       if (birdsData[group][this.props.question].name === currAnswer) {
         // true answer handling
         // this.properties.success.play()
-        e.target.parentNode.classList.add('right')
+        e.target.parentNode.classList.add('right');
         console.log('YYAAAAAAAAAASSSSSSSSSSSSS!!!! I GOT TWO FREE TACOS!!!!!!!!!');
         this.setState({
           isAnswered: true,
         });
         this.props.incrementScore(5 - this.state.mistakes);
         this.props.nextStepSetter();
+        this.props.finishQuiz();
       } else {
         // false answer handling
         // this.properties.failure.play()
-        e.target.parentNode.classList.add('wrong')
+        e.target.parentNode.classList.add('wrong');
         console.log('NOPE');
         this.setState({
           mistakes: this.state.mistakes + 1,
@@ -103,12 +105,12 @@ class Quiz6 extends React.Component {
             />
           </div>
 
-          <BrowserRouter>
-            <nav className='col-6'>
+          <Router>
+            <nav className="col-6">
               <ul>
                 {birdsData[group].map(bird => {
                   return (
-                    <li className='nav-link' key={bird.name}>
+                    <li className="nav-link" key={bird.name}>
                       <Link bird={bird.name} onClick={this.checkAnswer} to={`/${bird.name}`}>
                         {bird.name}
                       </Link>
@@ -123,7 +125,7 @@ class Quiz6 extends React.Component {
                 return (
                   <Route key={`/${bird.name}`} path={`/${bird.name}`}>
                     <Fragment key={bird.name}>
-                      <div className='col-6'>
+                      <div className="col-6">
                         <p>{bird.name}</p>
                         <audio
                           onPlay={this.playAudio}
@@ -147,13 +149,13 @@ class Quiz6 extends React.Component {
                 </div>
               </Route>
             </Switch>
-          </BrowserRouter>
+          </Router>
           {group + 1 < groupsNames.length ? (
             <Link
               className="col-12"
               step={group + 1}
               onClick={this.props.goToNext}
-              to={`/${groupsNames[group + 1]}`}
+              to={`/${groupsNamesEng[group + 1]}`}
             >
               Следующий вопрос
             </Link>

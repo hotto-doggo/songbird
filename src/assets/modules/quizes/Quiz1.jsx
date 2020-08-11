@@ -13,9 +13,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Fragment } from 'react';
-import { Link, BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Link, MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import birdsData from '../birdsData';
 import groupsNames from '../groupsNames';
+import groupsNamesEng from '../groupsNamesEng';
 
 class Quiz1 extends React.Component {
   constructor(props) {
@@ -107,7 +108,7 @@ class Quiz1 extends React.Component {
             />
           </div>
 
-          <BrowserRouter>
+          <Router>
             <nav className="col-6">
               <ul>
                 {birdsData[group].map(bird => {
@@ -151,13 +152,13 @@ class Quiz1 extends React.Component {
                 </div>
               </Route>
             </Switch>
-          </BrowserRouter>
+          </Router>
           {group + 1 < groupsNames.length ? (
             <Link
               className="col-12"
               step={group + 1}
               onClick={this.props.goToNext}
-              to={`/${groupsNames[group + 1]}`}
+              to={`/${groupsNamesEng[group + 1]}`}
             >
               Следующий вопрос
             </Link>
