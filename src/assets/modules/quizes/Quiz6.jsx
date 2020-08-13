@@ -18,6 +18,8 @@ import birdsData from '../birdsData';
 import groupsNames from '../groupsNames';
 import groupsNamesEng from '../groupsNamesEng';
 
+import defBird from '../../images/birdy_by_rev_mono.gif';
+
 class Quiz6 extends React.Component {
   constructor(props) {
     super(props);
@@ -80,7 +82,10 @@ class Quiz6 extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <p>{groupsNames[group]}</p>
+          <div className="col-12">
+            <p>{groupsNames[group]}</p>
+          </div>
+
           {/* {birdsData[group].map(bird => {
             return (
               <Fragment key={bird.name}>
@@ -95,7 +100,11 @@ class Quiz6 extends React.Component {
             );
           })} */}
 
-          <div className="col-12">
+          {/* <div className="col-12"> */}
+          <div className="current-question-bird col-4">
+            <img src={this.state.isAnswered? birdsData[group][this.props.question].image : defBird} alt="bird" />
+          </div>
+          <div className="col-8">
             <p>{!this.state.isAnswered ? '******' : birdsData[group][this.props.question].name}</p>
             <audio
               onPlay={this.playAudio}
@@ -104,6 +113,7 @@ class Quiz6 extends React.Component {
               src={birdsData[group][this.props.question].audio}
             />
           </div>
+          {/* </div> */}
 
           <Router>
             <nav className="col-6">
@@ -127,6 +137,9 @@ class Quiz6 extends React.Component {
                     <Fragment key={bird.name}>
                       <div className="col-6">
                         <p>{bird.name}</p>
+                        <div className='option__image'>
+                          <img className='option__img' src={bird.image} alt={bird.name} />                          
+                        </div>
                         <audio
                           onPlay={this.playAudio}
                           className={`group${group}`}
@@ -152,7 +165,7 @@ class Quiz6 extends React.Component {
           </Router>
           {group + 1 < groupsNames.length ? (
             <Link
-              className="col-12"
+              className={`next-step col-12 ${this.state.isAnswered ? 'active' : ''}`}
               step={group + 1}
               onClick={this.props.goToNext}
               to={`/${groupsNamesEng[group + 1]}`}

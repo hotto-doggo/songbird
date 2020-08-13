@@ -7,7 +7,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.scss';
@@ -15,7 +15,6 @@ import './index.scss';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { Link, Switch, Route, MemoryRouter as Router } from 'react-router-dom';
-import NotFound from './assets/modules/NotFound';
 import Header from './assets/modules/Header';
 import Quiz1 from './assets/modules/quizes/Quiz1';
 import Quiz2 from './assets/modules/quizes/Quiz2';
@@ -23,7 +22,6 @@ import Quiz3 from './assets/modules/quizes/Quiz3';
 import Quiz4 from './assets/modules/quizes/Quiz4';
 import Quiz5 from './assets/modules/quizes/Quiz5';
 import Quiz6 from './assets/modules/quizes/Quiz6';
-import birdsData from './assets/modules/birdsData';
 import groupsNames from './assets/modules/groupsNames';
 import groupsNamesEng from './assets/modules/groupsNamesEng';
 import win from './assets/images/win.gif';
@@ -37,6 +35,7 @@ class App extends React.Component {
     this.state = {
       score: 0,
       step: 0,
+      currStep: 0,
       isFinished: false,
       randoms: [
         randomInteger(0, groupsNames.length - 1),
@@ -77,6 +76,9 @@ class App extends React.Component {
     if (this.state.step !== step) {
       e.preventDefault();
     }
+    this.setState({
+      currStep: this.state.currStep + 1,
+    });
     console.log(step);
     console.log(this.state.step);
   }
@@ -88,13 +90,13 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.randoms)
+    console.log(this.state.randoms);
     const { score } = this.state;
     return (
       <>
         <Router>
           <Header score={score} />
-          <button onClick={this.nextStepSetter}>nextStepSetter </button>
+          {/* <button onClick={this.nextStepSetter}>nextStepSetter </button> */}
           <div className="container">
             <div className="row">
               <nav>
@@ -102,7 +104,12 @@ class App extends React.Component {
                   {groupsNamesEng.map((group, index) => {
                     console.log(`/${group}`);
                     return (
-                      <li className="list-group-item nav-link" key={index}>
+                      <li
+                        className={`list-group-item nav-link ${
+                          this.state.currStep === index ? 'active' : ''
+                        }`}
+                        key={index}
+                      >
                         <Link step={index} onClick={this.goToNextQuiz} to={`/${group}`}>
                           {groupsNames[index]}
                         </Link>
@@ -352,26 +359,38 @@ class App extends React.Component {
           </Switch>
         </Router>
         {this.state.isFinished ? (
-          <div className="modal-window col-12">
-            {this.state.score < 30 ? (
-              <>
-                <h2>
-                  Количество баллов, которые вы набрали: {this.state.score}. Попробуйте пройти тест
-                  еще раз, чтобы набрать максимальное количество баллов!
-                </h2>
-              </>
-            ) : (
-              <>
-                <h2>
-                  Количество баллов, которые вы набрали: {this.state.score}. Поздравляю, это
-                  максимально возможное количество баллов за этот тест!!!
-                </h2>
-                <div>
-                  <img src={win} alt="win" />
+          <div className="modal-window">
+            <div className="container">
+              <div className="row">
+                <div className="col-12 content">
+                  {this.state.score < 30 ? (
+                    <>
+                      <h2>
+                        Количество баллов, которые вы набрали: {this.state.score}. Попробуйте пройти
+                        тест еще раз, чтобы набрать максимальное количество баллов!
+                      </h2>
+                    </>
+                  ) : (
+                    <>
+                      <h2>
+                        Количество баллов, которые вы набрали: {this.state.score}. Поздравляю, это
+                        максимально возможное количество баллов за этот тест!!!
+                      </h2>
+                      <div>
+                        <img src={win} alt="win" />
+                      </div>
+                    </>
+                  )}
+                  <button
+                    onClick={() => {
+                      location.reload();
+                    }}
+                  >
+                    Пройти тест еще раз
+                  </button>
                 </div>
-              </>
-            )}
-            <button onClick={() => {location.reload()}}>Пройти тест еще раз</button>
+              </div>
+            </div>
           </div>
         ) : null}
       </>
