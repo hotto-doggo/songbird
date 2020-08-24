@@ -1,12 +1,3 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/button-has-type */
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-console */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -45,7 +36,6 @@ class App extends React.Component {
         randomInteger(0, groupsNames.length - 1),
         randomInteger(0, groupsNames.length - 1),
       ],
-      // answered: [false, false, false, false, false, false],
     };
     this.nextStepSetter = this.nextStepSetter.bind(this);
     this.goToNextQuiz = this.goToNextQuiz.bind(this);
@@ -54,33 +44,30 @@ class App extends React.Component {
   }
 
   nextStepSetter() {
-    // const newHistory = this.state.answered;
-    // newHistory.pop();
-    // newHistory.unshift(true);
-    console.log(this.state);
+    const { step } = this.state;
+
     this.setState({
-      step: this.state.step + 1,
-      // answered: newHistory,
+      step: step + 1,
     });
   }
 
   incrementScore(num) {
+    const { score } = this.state;
     this.setState({
-      score: this.state.score + num,
+      score: score + num,
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   goToNextQuiz(e) {
-    const step = Number(e.target.getAttribute('step'));
-    if (this.state.step !== step) {
+    const currentStep = Number(e.target.getAttribute('step'));
+    const { step, currStep } = this.state;
+    if (step !== currentStep) {
       e.preventDefault();
+    } else {
+      this.setState({
+        currStep: currStep + 1,
+      });
     }
-    this.setState({
-      currStep: this.state.currStep + 1,
-    });
-    console.log(step);
-    console.log(this.state.step);
   }
 
   finishQuiz() {
@@ -90,25 +77,23 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.randoms);
-    const { score } = this.state;
+    // console.log(this.state.randoms);
+    const { score, currStep, isFinished, randoms } = this.state;
+    console.log(randoms);
     return (
       <>
         <Router>
           <Header score={score} />
-          {/* <button onClick={this.nextStepSetter}>nextStepSetter </button> */}
+
           <div className="container">
             <div className="row">
               <nav>
-                <ul className="list-group list-group-horizontal">
+                <ul className="list-group list-group-horizontal question-groups">
                   {groupsNamesEng.map((group, index) => {
-                    console.log(`/${group}`);
                     return (
                       <li
-                        className={`list-group-item nav-link ${
-                          this.state.currStep === index ? 'active' : ''
-                        }`}
-                        key={index}
+                        className={`list-group-item nav-link ${currStep === index ? 'active' : ''}`}
+                        key={group}
                       >
                         <Link step={index} onClick={this.goToNextQuiz} to={`/${group}`}>
                           {groupsNames[index]}
@@ -121,137 +106,9 @@ class App extends React.Component {
             </div>
           </div>
           <Switch>
-            {/* <Route path="/">
-              <Quiz1
-                question={this.state.randoms[0]}
-                group="0"
-                isAnswered={false}
-                mistakes={0}
-                properties={this.state}
-                goToNext={this.goToNextQuiz}
-                nextStepSetter={this.nextStepSetter}
-                incrementScore={this.incrementScore}
-              />
-            </Route> */}
-
-            {/* не через цикл с компонентом в рендере */}
-            {/* <Route
-              path={`/${groupsNamesEng[0]}`}
-              render={() => (
-                <Quiz1
-                  question={this.state.randoms[0]}
-                  group="0"
-                  isAnswered={false}
-                  mistakes={0}
-                  properties={this.state}
-                  goToNext={this.goToNextQuiz}
-                  nextStepSetter={this.nextStepSetter}
-                  incrementScore={this.incrementScore}
-                />
-              )}
-            />
-
-            <Route
-              path={`/${groupsNamesEng[1]}`}
-              render={() => (
-                <Quiz2
-                  question={this.state.randoms[1]}
-                  group="1"
-                  isAnswered={false}
-                  mistakes={0}
-                  properties={this.state}
-                  goToNext={this.goToNextQuiz}
-                  nextStepSetter={this.nextStepSetter}
-                  incrementScore={this.incrementScore}
-                />
-              )}
-            />
-
-            <Route
-              path={`/${groupsNamesEng[2]}`}
-              render={() => (
-                <Quiz3
-                  question={this.state.randoms[2]}
-                  group="2"
-                  isAnswered={false}
-                  mistakes={0}
-                  properties={this.state}
-                  goToNext={this.goToNextQuiz}
-                  nextStepSetter={this.nextStepSetter}
-                  incrementScore={this.incrementScore}
-                />
-              )}
-            />
-
-            <Route
-              path={`/${groupsNamesEng[3]}`}
-              render={() => (
-                <Quiz4
-                  question={this.state.randoms[3]}
-                  group="3"
-                  isAnswered={false}
-                  mistakes={0}
-                  properties={this.state}
-                  goToNext={this.goToNextQuiz}
-                  nextStepSetter={this.nextStepSetter}
-                  incrementScore={this.incrementScore}
-                />
-              )}
-            />
-
-            <Route
-              path={`/${groupsNamesEng[4]}`}
-              render={() => (
-                <Quiz5
-                  question={this.state.randoms[4]}
-                  group="4"
-                  isAnswered={false}
-                  mistakes={0}
-                  properties={this.state}
-                  goToNext={this.goToNextQuiz}
-                  nextStepSetter={this.nextStepSetter}
-                  incrementScore={this.incrementScore}
-                />
-              )}
-            />
-
-            <Route
-              path={`/${groupsNamesEng[5]}`}
-              render={() => (
-                <Quiz6
-                  question={this.state.randoms[5]}
-                  group="5"
-                  isAnswered={false}
-                  mistakes={0}
-                  properties={this.state}
-                  goToNext={this.goToNextQuiz}
-                  nextStepSetter={this.nextStepSetter}
-                  incrementScore={this.incrementScore}
-                />
-              )}
-            />
-
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Quiz1
-                  question={this.state.randoms[0]}
-                  group="0"
-                  isAnswered={false}
-                  mistakes={0}
-                  properties={this.state}
-                  goToNext={this.goToNextQuiz}
-                  nextStepSetter={this.nextStepSetter}
-                  incrementScore={this.incrementScore}
-                />
-              )}
-            /> */}
-
-            {/* последний рабочий не через цикл */}
             <Route path={`/${groupsNamesEng[0]}`}>
               <Quiz1
-                question={this.state.randoms[0]}
+                question={randoms[0]}
                 group="0"
                 isAnswered={false}
                 mistakes={0}
@@ -259,12 +116,13 @@ class App extends React.Component {
                 goToNext={this.goToNextQuiz}
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
+                finishQuiz={this.finishQuiz}
               />
             </Route>
 
             <Route path={`/${groupsNamesEng[1]}`}>
               <Quiz2
-                question={this.state.randoms[1]}
+                question={randoms[1]}
                 group="1"
                 isAnswered={false}
                 mistakes={0}
@@ -272,12 +130,13 @@ class App extends React.Component {
                 goToNext={this.goToNextQuiz}
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
+                finishQuiz={this.finishQuiz}
               />
             </Route>
 
             <Route path={`/${groupsNamesEng[2]}`}>
               <Quiz3
-                question={this.state.randoms[2]}
+                question={randoms[2]}
                 group="2"
                 isAnswered={false}
                 mistakes={0}
@@ -285,12 +144,13 @@ class App extends React.Component {
                 goToNext={this.goToNextQuiz}
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
+                finishQuiz={this.finishQuiz}
               />
             </Route>
 
             <Route path={`/${groupsNamesEng[3]}`}>
               <Quiz4
-                question={this.state.randoms[3]}
+                question={randoms[3]}
                 group="3"
                 isAnswered={false}
                 mistakes={0}
@@ -298,12 +158,13 @@ class App extends React.Component {
                 goToNext={this.goToNextQuiz}
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
+                finishQuiz={this.finishQuiz}
               />
             </Route>
 
             <Route path={`/${groupsNamesEng[4]}`}>
               <Quiz5
-                question={this.state.randoms[4]}
+                question={randoms[4]}
                 group="4"
                 isAnswered={false}
                 mistakes={0}
@@ -311,12 +172,13 @@ class App extends React.Component {
                 goToNext={this.goToNextQuiz}
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
+                finishQuiz={this.finishQuiz}
               />
             </Route>
 
             <Route path={`/${groupsNamesEng[5]}`}>
               <Quiz6
-                question={this.state.randoms[5]}
+                question={randoms[5]}
                 group="5"
                 isAnswered={false}
                 mistakes={0}
@@ -330,7 +192,7 @@ class App extends React.Component {
 
             <Route exact path="/">
               <Quiz1
-                question={this.state.randoms[0]}
+                question={randoms[0]}
                 group="0"
                 isAnswered={false}
                 mistakes={0}
@@ -338,52 +200,39 @@ class App extends React.Component {
                 goToNext={this.goToNextQuiz}
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
+                finishQuiz={this.finishQuiz}
               />
             </Route>
-
-            {/* последний рабочий через цикл
-           {groupsNames.map((group, index) => {
-            return(
-              <Route path={`/${group}`}>
-              <Quiz1
-                question={this.state.randoms[index]}
-                group={index}
-                properties={this.state}
-                goToNext={this.goToNextQuiz}
-                nextStepSetter={this.nextStepSetter}
-                incrementScore={this.incrementScore}
-              />
-            </Route>
-            )
-          })} */}
           </Switch>
         </Router>
-        {this.state.isFinished ? (
+
+        {isFinished ? (
           <div className="modal-window">
             <div className="container">
               <div className="row">
                 <div className="col-12 content">
-                  {this.state.score < 30 ? (
+                  {score < 30 ? (
                     <>
                       <h2>
-                        Количество баллов, которые вы набрали: {this.state.score}. Попробуйте пройти
-                        тест еще раз, чтобы набрать максимальное количество баллов!
+                        Количество баллов, которые вы набрали: {score}. Попробуйте пройти тест еще
+                        раз, чтобы набрать максимальное количество баллов!
                       </h2>
                     </>
                   ) : (
                     <>
                       <h2>
-                        Количество баллов, которые вы набрали: {this.state.score}. Поздравляю, это
-                        максимально возможное количество баллов за этот тест!!!
+                        Количество баллов, которые вы набрали: {score}. Поздравляю, это максимально
+                        возможное количество баллов за этот тест!!!
                       </h2>
-                      <div>
+                      <div className="win-image">
                         <img src={win} alt="win" />
                       </div>
                     </>
                   )}
                   <button
+                    type="button"
                     onClick={() => {
-                      location.reload();
+                      window.location.reload();
                     }}
                   >
                     Пройти тест еще раз

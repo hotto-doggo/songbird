@@ -19,6 +19,12 @@ header {
   }
 }
 
+.question-groups{
+  
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .current-question-bird {
   overflow: hidden;
   height: 200px;
@@ -84,6 +90,7 @@ header {
 }
 
 .modal-window {
+  z-index: 100;
   position: fixed;
   display: flex;
   justify-content: center;
@@ -121,6 +128,26 @@ header {
   }
 }
 
+.finish-quiz{
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+  background: #eeeeee;
+  color: #000000;
+  font-weight: 700;
+  border: none;
+
+  &.active {
+    background: #85e285;
+  }
+
+  &:hover {
+    color: #000000;
+    text-decoration: none;
+    filter: brightness(0.9);
+  }
+}
+
 .option {
   &__image {
     overflow: hidden;
@@ -132,6 +159,15 @@ header {
   }
 
   &__img {
+    width: 100%;
+  }
+}
+.win-image{
+  width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+
+  & img{
     width: 100%;
   }
 }
