@@ -62,14 +62,14 @@ class App extends React.Component {
 
   goToNextQuiz(e) {
     const currentStep = Number(e.target.getAttribute('step'));
-    const { currStep, answeredStep } = this.state;
-    if (answeredStep === currStep && answeredStep !== currentStep) {
+    const { step, currStep, answeredStep } = this.state;
+    console.log(answeredStep, currentStep, currStep)
+    if (answeredStep === currStep && step === currentStep) {
       this.setState({
         currStep: currStep + 1,
       });      
     } else {
       e.preventDefault();
-
     }
   }
 
