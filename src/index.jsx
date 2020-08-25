@@ -27,6 +27,7 @@ class App extends React.Component {
       score: 0,
       step: 0,
       currStep: 0,
+      answeredStep: -1,
       isFinished: false,
       randoms: [
         randomInteger(0, groupsNames.length - 1),
@@ -43,11 +44,12 @@ class App extends React.Component {
     this.finishQuiz = this.finishQuiz.bind(this);
   }
 
-  nextStepSetter() {
+  nextStepSetter(group) {
     const { step } = this.state;
 
     this.setState({
       step: step + 1,
+      answeredStep: group,
     });
   }
 
@@ -60,13 +62,14 @@ class App extends React.Component {
 
   goToNextQuiz(e) {
     const currentStep = Number(e.target.getAttribute('step'));
-    const { step, currStep } = this.state;
-    if (step !== currentStep) {
-      e.preventDefault();
-    } else {
+    const { currStep, answeredStep } = this.state;
+    if (answeredStep === currStep && answeredStep !== currentStep) {
       this.setState({
         currStep: currStep + 1,
-      });
+      });      
+    } else {
+      e.preventDefault();
+
     }
   }
 
@@ -79,7 +82,6 @@ class App extends React.Component {
   render() {
     // console.log(this.state.randoms);
     const { score, currStep, isFinished, randoms } = this.state;
-    console.log(randoms);
     return (
       <>
         <Router>

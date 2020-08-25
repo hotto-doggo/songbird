@@ -51,7 +51,7 @@ class Quiz2 extends React.Component {
           isAnswered: true,
         });
         incrementScore(5 - mistakes);
-        nextStepSetter();
+        nextStepSetter(Number(group));
         // if (properties.step === groupsNames.length - 1) {
         //   finishQuiz();
         // }
@@ -128,7 +128,7 @@ class Quiz2 extends React.Component {
                 );
               })}
               <Route>
-                <div className="col-6">
+                <div className="col-12 col-md-6">
                   <p>
                     Внимательно прослушайте предложенное выше аудио и попробуйте угадать, что за
                     птица поет.
