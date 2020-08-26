@@ -39,14 +39,14 @@ class Quiz5 extends React.Component {
   }
 
   checkAnswer(e) {
-    const { group, question, incrementScore, nextStepSetter } = this.props;
+    const { group, question, incrementScore, nextStepSetter, success, error } = this.props;
     const { isAnswered, mistakes } = this.state;
     const currAnswer = e.target.getAttribute('bird');
 
     if (!isAnswered) {
       if (birdsData[Number(group)][question].name === currAnswer) {
         e.target.parentNode.classList.add('right');
-
+        success.play()
         this.setState({
           isAnswered: true,
         });
@@ -57,7 +57,7 @@ class Quiz5 extends React.Component {
         // }
       } else {
         e.target.parentNode.classList.add('wrong');
-
+        error.play()
         this.setState({
           mistakes: mistakes + 1,
         });
@@ -70,7 +70,7 @@ class Quiz5 extends React.Component {
     const { isAnswered } = this.state;
 
     return (
-      <div className="container">
+      <div className="container options">
         <div className="row">
           <div className="col-12">
             <p>{groupsNames[Number(group)]}</p>
@@ -147,7 +147,11 @@ class Quiz5 extends React.Component {
               Следующий вопрос
             </Link>
           ) : (
-            <button type="button" onClick={isAnswered ? finishQuiz: null} className={`finish-quiz ${isAnswered ? 'active' : ''}`}>
+            <button
+              type="button"
+              onClick={isAnswered ? finishQuiz : null}
+              className={`finish-quiz ${isAnswered ? 'active' : ''}`}
+            >
               Показать результат
             </button>
           )}

@@ -1,5 +1,6 @@
 audio {
   width: 100%;
+  outline: none;
 }
 
 header {
@@ -37,57 +38,71 @@ header {
   }
 }
 
-.right {
-  background-color: #00ff00;
-  &:hover {
-    background-color: #00ff00;
-  }
+
+.options {
+  & .nav-link{
+    &:hover {
+      background-color: #eeeeee;
+    }
+    &::before{
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 10px;
+      background: #d6d8d8;
+    }
+    &.right{
+      &::before{
+        background: #00ff00;
+      }
+      
+    }
+    
+    &.wrong{
+      &::before{
+        background: #ff0000;
+      }
+      
+      // &:hover {
+      //   background-color: #00ff00;
+      // }
+    }
+  } 
 }
 
-.wrong {
-  background-color: #ff0000;
-  &:hover {
-    background-color: #00ff00;
-  }
-}
+
 
 .nav-link {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  &:hover {
-    background-color: #eeeeee;
-  }
+  
   & a {
     display: block !important;
     width: 100% !important;
     color: #000000;
-  }
-  &.active {
-    &:hover {
-      background-color: #013563;
-      border-color: #002e55;
-    }
-    & a {
-      color: #ffffff;
+    &:hover{
+      text-decoration: none;
     }
   }
+  
 }
 
-.right {
-  background-color: #00ff00;
-  &:hover {
-    background-color: #00ff00;
-  }
-}
+// .right {
+//   background-color: #00ff00;
+//   &:hover {
+//     background-color: #00ff00;
+//   }
+// }
 
-.wrong {
-  background-color: #ff0000;
-  &:hover {
-    background-color: #ff0000;
-  }
-}
+// .wrong {
+//   background-color: #ff0000;
+//   &:hover {
+//     background-color: #ff0000;
+//   }
+// }
 
 .modal-window {
   z-index: 100;

@@ -29,7 +29,7 @@ const config = env => ({
         loader: 'eslint-loader',
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|mp3)$/,
         use: [
           {
             loader: 'url-loader',

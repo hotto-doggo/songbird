@@ -16,6 +16,8 @@ import Quiz6 from './assets/modules/quizes/Quiz6';
 import groupsNames from './assets/modules/groupsNames';
 import groupsNamesEng from './assets/modules/groupsNamesEng';
 import win from './assets/images/win.gif';
+import successFile from './assets/modules/quizes/success.mp3';
+import errorFile from './assets/modules/quizes/error.mp3';
 
 import randomInteger from './assets/modules/quizes/randomInteger';
 
@@ -63,11 +65,11 @@ class App extends React.Component {
   goToNextQuiz(e) {
     const currentStep = Number(e.target.getAttribute('step'));
     const { step, currStep, answeredStep } = this.state;
-    console.log(answeredStep, currentStep, currStep)
+
     if (answeredStep === currStep && step === currentStep) {
       this.setState({
         currStep: currStep + 1,
-      });      
+      });
     } else {
       e.preventDefault();
     }
@@ -81,7 +83,10 @@ class App extends React.Component {
 
   render() {
     // console.log(this.state.randoms);
+    const success = new Audio(successFile);
+    const error = new Audio(errorFile);
     const { score, currStep, isFinished, randoms } = this.state;
+
     return (
       <>
         <Router>
@@ -94,7 +99,11 @@ class App extends React.Component {
                   {groupsNamesEng.map((group, index) => {
                     return (
                       <li
-                        className={`list-group-item nav-link ${currStep === index ? 'active' : ''}`}
+                        className={`list-group-item nav-link ${
+                          currStep === index
+                            ? 'list-group-item-primary'
+                            : 'list-group-item-secondary'
+                        }`}
                         key={group}
                       >
                         <Link step={index} onClick={this.goToNextQuiz} to={`/${group}`}>
@@ -119,6 +128,8 @@ class App extends React.Component {
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
                 finishQuiz={this.finishQuiz}
+                success={success}
+                error={error}
               />
             </Route>
 
@@ -133,6 +144,8 @@ class App extends React.Component {
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
                 finishQuiz={this.finishQuiz}
+                success={success}
+                error={error}
               />
             </Route>
 
@@ -147,6 +160,8 @@ class App extends React.Component {
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
                 finishQuiz={this.finishQuiz}
+                success={success}
+                error={error}
               />
             </Route>
 
@@ -161,6 +176,8 @@ class App extends React.Component {
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
                 finishQuiz={this.finishQuiz}
+                success={success}
+                error={error}
               />
             </Route>
 
@@ -175,6 +192,8 @@ class App extends React.Component {
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
                 finishQuiz={this.finishQuiz}
+                success={success}
+                error={error}
               />
             </Route>
 
@@ -189,6 +208,8 @@ class App extends React.Component {
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
                 finishQuiz={this.finishQuiz}
+                success={success}
+                error={error}
               />
             </Route>
 
@@ -203,6 +224,8 @@ class App extends React.Component {
                 nextStepSetter={this.nextStepSetter}
                 incrementScore={this.incrementScore}
                 finishQuiz={this.finishQuiz}
+                success={success}
+                error={error}
               />
             </Route>
           </Switch>

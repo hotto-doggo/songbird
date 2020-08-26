@@ -11,7 +11,7 @@ import groupsNamesEng from '../groupsNamesEng';
 
 import defBird from '../../images/birdy_by_rev_mono.gif';
 
-class Quiz6 extends React.Component {
+class Quiz3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,14 +39,14 @@ class Quiz6 extends React.Component {
   }
 
   checkAnswer(e) {
-    const { group, question, incrementScore, nextStepSetter } = this.props;
+    const { group, question, incrementScore, nextStepSetter, success, error } = this.props;
     const { isAnswered, mistakes } = this.state;
     const currAnswer = e.target.getAttribute('bird');
 
     if (!isAnswered) {
       if (birdsData[Number(group)][question].name === currAnswer) {
         e.target.parentNode.classList.add('right');
-
+        success.play()
         this.setState({
           isAnswered: true,
         });
@@ -57,7 +57,7 @@ class Quiz6 extends React.Component {
         // }
       } else {
         e.target.parentNode.classList.add('wrong');
-
+        error.play()
         this.setState({
           mistakes: mistakes + 1,
         });
@@ -70,7 +70,7 @@ class Quiz6 extends React.Component {
     const { isAnswered } = this.state;
 
     return (
-      <div className="container">
+      <div className="container options">
         <div className="row">
           <div className="col-12">
             <p>{groupsNames[Number(group)]}</p>
@@ -161,7 +161,7 @@ class Quiz6 extends React.Component {
   }
 }
 
-Quiz6.defaultProps = {
+Quiz3.defaultProps = {
   question: 0,
   group: '0',
   isAnswered: false,
@@ -173,7 +173,7 @@ Quiz6.defaultProps = {
   finishQuiz: null,
 };
 
-Quiz6.propTypes = {
+Quiz3.propTypes = {
   question: PropTypes.number,
   group: PropTypes.string,
   isAnswered: PropTypes.bool,
@@ -185,4 +185,4 @@ Quiz6.propTypes = {
   finishQuiz: PropTypes.func,
 };
 
-export default Quiz6;
+export default Quiz3;
