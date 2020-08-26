@@ -75,10 +75,20 @@ class App extends React.Component {
     }
   }
 
-  finishQuiz() {
-    this.setState({
-      isFinished: true,
-    });
+  finishQuiz(e) {
+    const currentStep = Number(e.target.getAttribute('step'));
+    const { step, currStep, answeredStep } = this.state;
+
+    if (answeredStep === currStep && step === currentStep) {
+      this.setState({
+        currStep: currStep + 1,
+      });
+      this.setState({
+        isFinished: true,
+      });
+    } else {
+      e.preventDefault();
+    }
   }
 
   render() {
@@ -228,10 +238,49 @@ class App extends React.Component {
                 error={error}
               />
             </Route>
+
+            <Route path="/modal">
+              {isFinished ? (
+                <div className="modal-window">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-12 content">
+                        {score < 30 ? (
+                          <>
+                            <h2>
+                              Количество баллов, которые вы набрали: {score}. Попробуйте пройти тест
+                              еще раз, чтобы набрать максимальное количество баллов!
+                            </h2>
+                          </>
+                        ) : (
+                          <>
+                            <h2>
+                              Количество баллов, которые вы набрали: {score}. Поздравляю, это
+                              максимально возможное количество баллов за этот тест!!!
+                            </h2>
+                            <div className="win-image">
+                              <img src={win} alt="win" />
+                            </div>
+                          </>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            window.location.reload();
+                          }}
+                        >
+                          Пройти тест еще раз
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </Route>
           </Switch>
         </Router>
 
-        {isFinished ? (
+        {/* {isFinished ? (
           <div className="modal-window">
             <div className="container">
               <div className="row">
@@ -266,7 +315,7 @@ class App extends React.Component {
               </div>
             </div>
           </div>
-        ) : null}
+        ) : null} */}
       </>
     );
   }

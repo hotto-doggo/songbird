@@ -38,6 +38,13 @@ class Quiz1 extends React.Component {
     this.setState({ prevAudio: e.target });
   }
 
+  finish(){
+    const {finishQuiz} = this.props;
+    const {prevAudio} = this.state
+    prevAudio.pause()
+    finishQuiz()
+  }
+
   checkAnswer(e) {
     const { group, question, incrementScore, nextStepSetter, success, error } = this.props;
     const { isAnswered, mistakes } = this.state;
@@ -147,13 +154,16 @@ class Quiz1 extends React.Component {
               Следующий вопрос
             </Link>
           ) : (
-            <button
-              type="button"
-              onClick={isAnswered ? finishQuiz : null}
-              className={`finish-quiz ${isAnswered ? 'active' : ''}`}
+            <Link
+              className={`next-step col-12 ${isAnswered ? 'active' : ''}`}
+              step={Number(group) + 1}
+              onClick={finishQuiz}
+              to='/modal'
             >
               Показать результат
-            </button>
+            </Link>
+            
+            
           )}
         </div>
       </div>
