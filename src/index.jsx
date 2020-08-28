@@ -95,6 +95,8 @@ class App extends React.Component {
     // console.log(this.state.randoms);
     const success = new Audio(successFile);
     const error = new Audio(errorFile);
+    success.volume = 0.1;
+    error.volume = 0.1;
     const { score, currStep, isFinished, randoms } = this.state;
 
     return (
@@ -102,10 +104,10 @@ class App extends React.Component {
         <Router>
           <Header score={score} />
 
-          <div className="container">
+          <div className="container navigation">
             <div className="row">
-              <nav>
-                <ul className="list-group list-group-horizontal question-groups">
+              <nav className='navigation__nav'>
+                <ul className="list-group list-group-horizontal question-groups nav-item">
                   {groupsNamesEng.map((group, index) => {
                     return (
                       <li

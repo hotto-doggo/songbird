@@ -5,20 +5,20 @@ import React from 'react';
 class Header extends React.Component {
 //   constructor(props) {
 //     super(props);
-//     // this.state = { score: this.props.score };
+
 //   }
 
   render() {
     const { score } = this.props;
     return (
       <header>
-        <div className="container">
+        <div className="container header">
           <div className="row">
-            <h1>
+            <h1 className='header__logo'>
               <a href="/">SONGBIRD</a>
             </h1>
             <div>
-              <p className="score">Total score: {score}</p>
+              <p className="header__score score">Total score: {score}</p>
             </div>
           </div>
         </div>
