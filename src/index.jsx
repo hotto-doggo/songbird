@@ -107,14 +107,14 @@ class App extends React.Component {
           <div className="container navigation">
             <div className="row">
               <nav className='navigation__nav'>
-                <ul className="list-group list-group-horizontal question-groups nav-item">
+                <ul className="list-group list-group-horizontal question-groups">
                   {groupsNamesEng.map((group, index) => {
                     return (
                       <li
                         className={`list-group-item nav-link ${
                           currStep === index
-                            ? 'list-group-item-primary'
-                            : 'list-group-item-secondary'
+                            ? 'avaliable'
+                            : 'non-avaliable'
                         }`}
                         key={group}
                       >
@@ -267,6 +267,7 @@ class App extends React.Component {
                         )}
                         <button
                           type="button"
+                          className='finish-quiz'
                           onClick={() => {
                             window.location.reload();
                           }}

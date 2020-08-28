@@ -38,11 +38,11 @@ class Quiz5 extends React.Component {
     this.setState({ prevAudio: e.target });
   }
 
-  finish(){
-    const {finishQuiz} = this.props;
-    const {prevAudio} = this.state
-    prevAudio.pause()
-    finishQuiz()
+  finish() {
+    const { finishQuiz } = this.props;
+    const { prevAudio } = this.state;
+    prevAudio.pause();
+    finishQuiz();
   }
 
   checkAnswer(e) {
@@ -53,18 +53,16 @@ class Quiz5 extends React.Component {
     if (!isAnswered) {
       if (birdsData[Number(group)][question].name === currAnswer) {
         e.target.parentNode.classList.add('right');
-        success.play()
+        success.play();
         this.setState({
           isAnswered: true,
         });
         incrementScore(5 - mistakes);
         nextStepSetter(Number(group));
-        // if (properties.step === groupsNames.length - 1) {
-        //   finishQuiz();
-        // }
+        
       } else {
         e.target.parentNode.classList.add('wrong');
-        error.play()
+        error.play();
         this.setState({
           mistakes: mistakes + 1,
         });
@@ -80,14 +78,16 @@ class Quiz5 extends React.Component {
       <div className="container options">
         <div className="row">
           <div className="col-12">
-            <p>{groupsNames[Number(group)]}</p>
+            <p className="options__group">{groupsNames[Number(group)]}</p>
           </div>
 
-          <div className="current-question-bird col-8 col-md-4">
+          <div className="current-question-bird col-8 col-md-2">
             <img src={isAnswered ? birdsData[Number(group)][question].image : defBird} alt="bird" />
           </div>
-          <div className="col-12 col-md-8">
-            <p>{!isAnswered ? '******' : birdsData[Number(group)][question].name}</p>
+          <div className="col-12 col-md-10 current-question-bird__info">
+            <p className="options__bird-question">
+              {!isAnswered ? '******' : birdsData[Number(group)][question].name}
+            </p>
             <audio
               onPlay={this.playAudio}
               className={`group${group}`}
@@ -98,7 +98,7 @@ class Quiz5 extends React.Component {
 
           <Router>
             <nav className="col-12 col-md-6">
-              <ul>
+              <ul className="options__nav">
                 {birdsData[Number(group)].map(bird => {
                   return (
                     <li className="nav-link" key={bird.name}>
@@ -116,30 +116,34 @@ class Quiz5 extends React.Component {
                 return (
                   <Route key={`/${bird.name}`} path={`/${bird.name}`}>
                     <Fragment key={bird.name}>
-                      <div className="col-12  col-md-6">
-                        <p>{bird.name}</p>
-                        <div className="option__image">
-                          <img className="option__img" src={bird.image} alt={bird.name} />
+                      <div className="col-12 col-md-6 options__bird-info-wrapper">
+                        <div className="options__bird-info">
+                          <p className="option__heading">{bird.name}</p>
+                          <div className="option__image">
+                            <img className="option__img" src={bird.image} alt={bird.name} />
+                          </div>
+                          <audio
+                            onPlay={this.playAudio}
+                            className={`group${group}`}
+                            controls
+                            src={bird.audio}
+                          />
+                          <p className="option__latin">{bird.species}</p>
+                          <p className="option__text">{bird.description}</p>
                         </div>
-                        <audio
-                          onPlay={this.playAudio}
-                          className={`group${group}`}
-                          controls
-                          src={bird.audio}
-                        />
-                        <p>{bird.species}</p>
-                        <p>{bird.description}</p>
                       </div>
                     </Fragment>
                   </Route>
                 );
               })}
               <Route>
-                <div className="col-12 col-md-6">
-                  <p>
-                    Внимательно прослушайте предложенное выше аудио и попробуйте угадать, что за
-                    птица поет.
-                  </p>
+                <div className="col-12 col-md-6 options__bird-info-wrapper">
+                  <div className="options__bird-info">
+                    <p>
+                      Внимательно прослушайте предложенное выше аудио и попробуйте угадать, что за
+                      птица поет.
+                    </p>
+                  </div>
                 </div>
               </Route>
             </Switch>
@@ -158,12 +162,10 @@ class Quiz5 extends React.Component {
               className={`next-step col-12 ${isAnswered ? 'active' : ''}`}
               step={Number(group) + 1}
               onClick={finishQuiz}
-              to='/modal'
+              to="/modal"
             >
               Показать результат
             </Link>
-            
-            
           )}
         </div>
       </div>
