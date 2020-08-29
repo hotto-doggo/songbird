@@ -3,10 +3,6 @@ import React from 'react';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Header extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//   }
 
   render() {
     const { score } = this.props;

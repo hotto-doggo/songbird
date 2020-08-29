@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -20,6 +22,7 @@ import successFile from './assets/modules/quizes/success.mp3';
 import errorFile from './assets/modules/quizes/error.mp3';
 
 import randomInteger from './assets/modules/quizes/randomInteger';
+import birdsData from './assets/modules/birdsData';
 
 class App extends React.Component {
   constructor(props) {
@@ -92,12 +95,14 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log(this.state.randoms);
     const success = new Audio(successFile);
     const error = new Audio(errorFile);
     success.volume = 0.1;
     error.volume = 0.1;
     const { score, currStep, isFinished, randoms } = this.state;
+
+    console.log('Правильные ответы для проверки на абсолютную победу:')
+    randoms.forEach((num, index) => console.log(birdsData[index][num].name))
 
     return (
       <>
@@ -106,15 +111,13 @@ class App extends React.Component {
 
           <div className="container navigation">
             <div className="row">
-              <nav className='navigation__nav'>
+              <nav className="navigation__nav">
                 <ul className="list-group list-group-horizontal question-groups">
                   {groupsNamesEng.map((group, index) => {
                     return (
                       <li
                         className={`list-group-item nav-link ${
-                          currStep === index
-                            ? 'avaliable'
-                            : 'non-avaliable'
+                          currStep === index ? 'avaliable' : 'non-avaliable'
                         }`}
                         key={group}
                       >
@@ -267,7 +270,7 @@ class App extends React.Component {
                         )}
                         <button
                           type="button"
-                          className='finish-quiz'
+                          className="finish-quiz"
                           onClick={() => {
                             window.location.reload();
                           }}
@@ -282,43 +285,6 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
-
-        {/* {isFinished ? (
-          <div className="modal-window">
-            <div className="container">
-              <div className="row">
-                <div className="col-12 content">
-                  {score < 30 ? (
-                    <>
-                      <h2>
-                        Количество баллов, которые вы набрали: {score}. Попробуйте пройти тест еще
-                        раз, чтобы набрать максимальное количество баллов!
-                      </h2>
-                    </>
-                  ) : (
-                    <>
-                      <h2>
-                        Количество баллов, которые вы набрали: {score}. Поздравляю, это максимально
-                        возможное количество баллов за этот тест!!!
-                      </h2>
-                      <div className="win-image">
-                        <img src={win} alt="win" />
-                      </div>
-                    </>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                  >
-                    Пройти тест еще раз
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null} */}
       </>
     );
   }
